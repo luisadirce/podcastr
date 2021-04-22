@@ -12,7 +12,8 @@ export function Player () {
     episodeList, 
     currentEpisodeIndex, 
     isPlaying, 
-    togglePlay
+    togglePlay,
+    setPlayingState
   } = useContext(PlayerContext);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export function Player () {
          <strong>Tocando agora: { episode?.title }</strong>
        </header>
 
-       { episode ? ( // if episode is not null
+       { episode ? ( // if episode is not null   
          <div className={styles.currentEpisode}>
            <Image 
             width= {592}
@@ -73,9 +74,12 @@ export function Player () {
 
          { episode && (
            <audio 
-           src={episode.url}
-           ref = {audioRef}
-           autoPlay/>
+            src={episode.url}
+            ref = {audioRef}
+            autoPlay
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)}
+           />
          )}
 
          <div className={styles.buttons}>
